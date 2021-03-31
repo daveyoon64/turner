@@ -1,25 +1,33 @@
-import logo from './logo.svg';
+import React, {Component} from 'react';
 import './App.css';
+import {testGet} from './HNservice'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  
+  componentDidMount() {
+    testGet()
+      .then(item => console.log(item))
+    console.log()
+  }
+
+  render() {
+    return (
+      <div className="App">
+        <header className="App-header">
+          Jack Reactor: A Hacker News Clone
+        </header>
+        <div className="Feed-list">
+          <p>Stories go here man</p>
+          <p>Intel is Dope Again</p>
+          <p>Apple changes name to Banana</p>
+        </div>
+        <div className="Footer">
+          <p>Made with love Muwwwahahhhhh</p>
+          <button>Back</button>
+        </div>
+      </div>
+    );
+  }
 }
 
 export default App;
