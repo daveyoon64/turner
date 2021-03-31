@@ -4,36 +4,20 @@ import {getTopStories, getStory} from './HNservice';
 
 class App extends Component {
   state = {
-    title: '',
-    url: '',
-    score: 0,
-    author: '',
-    comments: 0
+    stories: [],
+    story_nums: []
   }
-  
-  // get story numbers from https://hacker-news.firebaseio.com/v0/topstories.json
-    // this still be the state we use for our pagination
-  // to display story...
-    // get a number from story numbers
-      //and create new_story like we did below
 
   async componentDidMount() {
-    // testing
+    // Gets stories as list of numbers
     const top_stories = await getTopStories(); 
-    console.log(await top_stories);
-    console.log(await getStory(top_stories[0]));
-
-    const url = 'https://hacker-news.firebaseio.com/v0/item/26638145.json';
-    const response = await fetch(url);
-    const data = await response.json();
-    const new_story = {
-      title: data.title,
-      url: data.url,
-      score: data.score,
-      author: data.by,
-      comments: data.descendants
+    const stories_to_render = [];
+    for (let i = 0; i < 30; i++) {
+      // Gets story using numbers from stories
+      let temp = await getStory(top_stories[i]);
+      stories_to_render.push(temp);
     }
-    this.setState({...new_story});
+    this.setState({story_nums: top_stories, stories: stories_to_render})
   }
 
   render() {
@@ -44,21 +28,14 @@ class App extends Component {
         </header>
         <div className="Feed-list-container">
           <ol className="Feed-list">
-            <li>this is story test</li>
-            <li>this is story test</li>
-            <li>this is story test</li>
-            <li className="Story">
-              <a href={this.state.url}>{this.state.title}dkjgasdkljgahsdklgjashdlkgahsdklgashdklgjahsdlkga</a>
+            {this.state.stories.map(story => 
+              <li className="Story">
+              <a href={story.url}>{story.title}</a>
               <div className="Story-options">
-                {this.state.score} points by {this.state.author}ldfkgjsdfl;gsjfgl;sj TIMESTAMP | {this.state.comments} comments
+                {story.score} points by {story.author} TIMESTAMP | {story.comments} comments
               </div>
             </li>
-            <li className="Story">
-              <a href={this.state.url}>{this.state.title}</a>
-              <div className="Story-options">
-                {this.state.score} points by {this.state.author} TIMESTAMP | {this.state.comments} comments
-              </div>
-            </li>
+            )}
           </ol>
         </div>
         <div className="Footer">

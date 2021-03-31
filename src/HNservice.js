@@ -1,6 +1,3 @@
-
-let test = 'https://hacker-news.firebaseio.com/v0/item/26638145.json';
-
 export const getTopStories = async() => {
   // Gets the top 500 stories as numbers from Hacker News' API
   // data looks like: [3434523, 3453463, ...]

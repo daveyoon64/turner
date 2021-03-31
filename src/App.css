@@ -27,17 +27,15 @@
   flex-direction: column;
   align-items: left;
   justify-content: left;
-  font-size: calc(10px + 2vmin);
+  font-size: calc(10px + 1vmin);
   color: black;
   border: 2px solid black;
-  outline: #4CAF50 solid 10px;
 }
 
 .Story {
   text-align: left;
-  border: 1px solid black;
 }
 
 .Story-options {
-  font-size: calc(2px + 2vmin);
+  font-size: calc(2px + 1vmin);
 }
