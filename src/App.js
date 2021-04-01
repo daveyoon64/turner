@@ -2,21 +2,28 @@ import React, {Component} from 'react';
 import './App.css';
 import {getTopStories, getStory} from './HNservice';
 
+
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
 class App extends Component {
   state = {
     stories: [],
     story_nums: []
   }
 
+
   async componentDidMount() {
     // Gets stories as list of numbers
     const top_stories = await getTopStories(); 
-    const stories_to_render = [];
-    for (let i = 0; i < 30; i++) {
-      // Gets story using numbers from stories
-      let temp = await getStory(top_stories[i]);
-      stories_to_render.push(temp);
-    }
+    const smaller = await top_stories.slice(0,30);
+    console.log(smaller)
+    const stories_to_render = await Promise.all(smaller.map(async(story) => {
+      await sleep(0);
+      return getStory(story);
+    }))
+    console.log(stories_to_render);
     this.setState({story_nums: top_stories, stories: stories_to_render})
   }
 
