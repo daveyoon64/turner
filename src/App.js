@@ -2,29 +2,47 @@ import React, {Component} from 'react';
 import './App.css';
 import {getTopStories, getStory} from './HNservice';
 
-
-
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 class App extends Component {
   state = {
     stories: [],
-    story_nums: []
+    story_nums: [],
+    index: 0,
+    isNewIndex: false
   }
-
 
   async componentDidMount() {
     // Gets stories as list of numbers
-    const top_stories = await getTopStories(); 
-    const smaller = await top_stories.slice(0,30);
-    console.log(smaller)
-    const stories_to_render = await Promise.all(smaller.map(async(story) => {
+    const top_stories = await getTopStories();
+    this.setState({story_nums: top_stories});
+    this.updateStories();
+  }
+
+  async componentDidUpdate() {
+    if (this.state.isNewIndex) {
+      this.updateStories();
+      this.setState({isNewIndex: false});
+    }
+  }
+
+  updateStories = async() => {
+    const [first, last] = [this.state.index, this.state.index + 30];
+    const single_page = await this.state.story_nums.slice(first, last);
+    const stories_to_render = await Promise.all(single_page.map(async(story) => {
       await sleep(0);
       return getStory(story);
-    }))
-    console.log(stories_to_render);
-    this.setState({story_nums: top_stories, stories: stories_to_render})
+    }));
+    this.setState({stories: stories_to_render});
+  }
+
+  handleMoreClick = () => {
+    let new_index = this.state.index;
+    if (new_index <= this.state.story_nums.length && this.state.stories.length === 30) {
+       new_index += 30;
+    }
+    this.setState({index: new_index, isNewIndex: true});
   }
 
   render() {
@@ -34,20 +52,22 @@ class App extends Component {
           Jack Reactor: A Hacker News Clone
         </header>
         <div className="Feed-list-container">
-          <ol className="Feed-list">
-            {this.state.stories.map(story => 
-              <li className="Story">
-              <a href={story.url}>{story.title}</a>
-              <div className="Story-options">
-                {story.score} points by {story.author} TIMESTAMP | {story.comments} comments
-              </div>
-            </li>
-            )}
+          <ol className="Feed-list" start={this.state.index + 1}>
+            {this.state.stories.length 
+              ?  this.state.stories.map(story => 
+                   <li className="Story">
+                     <a href={story.url}>{story.title}</a>
+                     <div className="Story-options">
+                       {story.score} points by {story.author} TIMESTAMP | {story.comments} comments
+                     </div>
+                   </li>) 
+              : <div>Yo, I'm loading.</div>
+            }
           </ol>
         </div>
+        <button onClick={this.handleMoreClick}>More</button>
         <div className="Footer">
           <p>Made with love Muwwwahahhhhh</p>
-          <button>Back</button>
         </div>
       </div>
     );
