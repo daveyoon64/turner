@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import './App.css';
 import {getTopStories, getStory} from './HNservice';
-import {Header, Footer} from './components';
+import {Header, Footer, Feed} from './components';
 
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -50,20 +50,8 @@ class App extends Component {
     return (
       <div className="App">
         <Header />
-        <div className="Feed-list-container">
-          <ol className="Feed-list" start={this.state.index + 1}>
-            {this.state.stories.length 
-              ?  this.state.stories.map(story => 
-                   <li className="Story">
-                     <a href={story.url}>{story.title}</a>
-                     <div className="Story-options">
-                       {story.score} points by {story.author} TIMESTAMP | {story.comments} comments
-                     </div>
-                   </li>) 
-              : <div>Yo, I'm loading.</div>
-            }
-          </ol>
-        </div>
+        <Feed start={this.state.index}
+          stories={this.state.stories}/>
         <button onClick={this.handleMoreClick}>More</button>
         <Footer />
       </div>
