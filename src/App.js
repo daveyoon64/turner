@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import './App.css';
 import {getTopStories, getStory} from './HNservice';
-import {Header} from './components/Header';
+import {Header, Footer} from './components';
 
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -65,9 +65,7 @@ class App extends Component {
           </ol>
         </div>
         <button onClick={this.handleMoreClick}>More</button>
-        <div className="Footer">
-          <p>Made with love Muwwwahahhhhh</p>
-        </div>
+        <Footer />
       </div>
     );
   }
