@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import './App.css';
 import {getTopStories, getStory} from './HNservice';
+import {Header} from './components/Header';
 
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -48,9 +49,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          Jack Reactor: A Hacker News Clone
-        </header>
+        <Header />
         <div className="Feed-list-container">
           <ol className="Feed-list" start={this.state.index + 1}>
             {this.state.stories.length 
