@@ -2,10 +2,8 @@ import React, {Component} from 'react';
 import './App.css';
 import {getTopStories, getStory} from './HNservice';
 import {Header, Footer, Feed} from './components';
+import {sleep} from './util';
 
-function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
 class App extends Component {
   state = {
     stories: [],
