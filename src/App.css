@@ -39,3 +39,7 @@
 .Story-options {
   font-size: calc(2px + 1vmin);
 }
+
+.Loading {
+  background-color: red;
+}

@@ -13,7 +13,7 @@ export const Feed = (props) => {
                 {story.score} points by {story.author} TIMESTAMP | {story.comments} comments
               </div>
             </li>) 
-          : <div>Yo, I'm loading.</div>
+          : <div className="Loading">Yo, I'm loading.</div>
             }
       </ol>
     </div>
