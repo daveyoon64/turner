@@ -22,6 +22,14 @@
   color: #61dafb;
 }
 
+/* The feed, which acts as body */
+.Feed-list-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .Feed-list {
   display: flex;
   flex-direction: column;
@@ -40,6 +48,50 @@
   font-size: calc(2px + 1vmin);
 }
 
+/* footer */
+Footer {
+  margin-top: auto;
+}
+
+/* loading */
 .Loading {
-  background-color: red;
+  background-color: transparent;
+  width: 300px;
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Loading span {
+  font-size: 2rem;
+  color: black;
+  animation: fade 0.5s linear 0s infinite;
+}
+
+.half-spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid blue;
+  border-top: transparent;
+  border-radius: 50%;
+  animation: spin 0.5s linear 0s infinite;
+}
+
+@keyframes fade {
+  from {
+    opacity: 0; 
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
