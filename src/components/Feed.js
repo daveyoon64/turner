@@ -10,7 +10,7 @@ export const Feed = (props) => {
             <li className="Story" key={generateId()}>
               <a href={story.url}>{story.title}</a>
               <div className="Story-options">
-                {story.score} points by {story.author} TIMESTAMP | {story.comments} comments
+                {story.score} points by {story.by} TIMESTAMP | {story.comments} comments
               </div>
             </li>) 
           : (
