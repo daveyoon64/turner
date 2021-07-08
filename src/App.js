@@ -12,14 +12,14 @@ class App extends Component {
     isNewIndex: false
   }
 
-  async componentDidMount() {
+  componentDidMount = async() => {
     // Gets stories as list of numbers
     const top_stories = await getTopStories();
     this.setState({story_nums: top_stories});
     this.updateStories();
   }
 
-  async componentDidUpdate() {
+  componentDidUpdate = async() => {
     if (this.state.isNewIndex) {
       this.updateStories();
       this.setState({isNewIndex: false});

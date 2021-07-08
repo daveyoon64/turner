@@ -8,14 +8,14 @@ This app uses the HackerNews API with React to make a pleasant viewing experienc
 1. It should push history state to the session history.
 2. It should coordinate session history with the app with onpopstate.
 3. It should handle URL routing.
-4. It should show a timestamp that shows elapsed time from time accessed minus when the story was posted.
-5. It should correctly number stories.
+4. It should correctly number stories.
 
 ## Completed
+1. ~~It should show a timestamp that shows elapsed time from time accessed minus when the story was posted.~~
 2. ~~It should have a footer that sticks to the bottom of the viewport, even while loading.~~
-3. ~~Refactor App.js into smaller components.~~
-4. ~~Refactor App.js to use React hooks.~~
-5. ~~It should should show a loading page.~~
+3. ~~Refactor app into smaller components.~~
+4. ~~Refactor app to use React hooks.~~
+5. ~~It should should show a pre-loader.~~
 
 ## Future Features
 1. It should be searchable using Elasticsearch (or another API)
@@ -24,7 +24,10 @@ This app uses the HackerNews API with React to make a pleasant viewing experienc
 4. It should be able to show comments.
 5. It should be able to switch between newstories, topstories, beststories
 6. It should have a URL router to handle the above features.
+7. It should handle timestamps like on hacker news (elapsed time from when story was posted)
+
 ## Resources
 [HackerNews API](https://github.com/HackerNews/API)
+
 ## Namesake
 ![](turner.gif)
