@@ -1,5 +1,5 @@
 import {React} from 'react';
-import {generateId} from '../util';
+import {generateId, generateTimestamp} from '../util';
 
 export const Feed = (props) => {
   return(
@@ -10,7 +10,7 @@ export const Feed = (props) => {
             <li className="Story" key={generateId()}>
               <a href={story.url}>{story.title}</a>
               <div className="Story-options">
-                {story.score} points by {story.by} TIMESTAMP | {story.comments} comments
+                {story.score} points by {story.by} on {generateTimestamp(story.time)} | {story.comments} comments
               </div>
             </li>) 
           : (

@@ -15,3 +15,24 @@ export const generateId = () => {
   }
   return uuid;
 }
+
+export const generateTimestamp = (timestamp) => {
+  const calendar = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December'
+  ]
+  const year = new Date(timestamp * 1000).getFullYear().toString()
+  const month = new Date(timestamp * 1000).getMonth()
+  const day = new Date(timestamp * 1000).getDate().toString()
+  return calendar[month] + ' ' + day + ', ' + year
+}
