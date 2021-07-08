@@ -1,60 +1,57 @@
-import React, {Component} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import './App.css';
-import {getTopStories, getStory} from './HNservice';
+import hnService from './HNservice';
 import {Header, Footer, Feed} from './components';
 import {sleep} from './util';
 
-class App extends Component {
-  state = {
-    stories: [],
-    story_nums: [],
-    index: 0,
-    isNewIndex: false
-  }
+const App = () => {
+  const [stories, setStories] = useState([]);
+  const [storyNums, setStoryNums] = useState([]);
+  const [index, setIndex] = useState(0);
+  const [isNewIndex, setIsNewIndex] = useState(true);
 
-  componentDidMount = async() => {
-    // Gets stories as list of numbers
-    const top_stories = await getTopStories();
-    this.setState({story_nums: top_stories});
-    this.updateStories();
-  }
-
-  componentDidUpdate = async() => {
-    if (this.state.isNewIndex) {
-      this.updateStories();
-      this.setState({isNewIndex: false});
-    }
-  }
-
-  updateStories = async() => {
-    const [first, last] = [this.state.index, this.state.index + 30];
-    const single_page = await this.state.story_nums.slice(first, last);
+  const updateStories = useCallback(async() => {
+    const [first, last] = [index, index + 30];
+    const single_page = await storyNums.slice(first, last);
     const stories_to_render = await Promise.all(single_page.map(async(story) => {
-      await sleep(0);
-      return getStory(story);
+      await sleep(0)
+      return hnService.getStory(story)
     }));
-    this.setState({stories: stories_to_render});
-  }
+    setStories(stories_to_render)
+  }, [index, storyNums]);
 
-  handleMoreClick = () => {
-    let new_index = this.state.index;
-    if (new_index <= this.state.story_nums.length && this.state.stories.length === 30) {
+  useEffect(() => {
+    updateStories()
+
+    if (isNewIndex) {
+      hnService
+      .getTopStories()
+      .then(stories => {
+        setStoryNums(stories)
+      })
+      // updateStories()
+      setIsNewIndex(false)
+    }
+  }, [isNewIndex, index, updateStories, storyNums]);
+
+  const handleMoreClick = (e) => {
+    let new_index = index;
+    if (new_index <= storyNums.length && stories.length === 30) {
        new_index += 30;
     }
-    this.setState({index: new_index, isNewIndex: true});
+    setIndex(new_index)
+    setIsNewIndex(true)
   }
 
-  render() {
-    return (
+  return (
       <div className="App">
         <Header />
-        <Feed start={this.state.index}
-          stories={this.state.stories}/>
-        <button onClick={this.handleMoreClick}>More</button>
+        <Feed start={index}
+          stories={stories}/>
+        <button onClick={handleMoreClick}>More</button>
         <Footer />
       </div>
     );
-  }
 }
 
 export default App;

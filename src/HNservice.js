@@ -1,4 +1,4 @@
-export const getTopStories = async() => {
+const getTopStories = async() => {
   // Gets the top 500 stories as numbers from Hacker News' API
   // data looks like: [3434523, 3453463, ...]
   const url = 'https://hacker-news.firebaseio.com/v0/topstories.json';
@@ -11,7 +11,7 @@ export const getTopStories = async() => {
   } 
 }
 
-export const getStory = async(number) => {
+const getStory = async(number) => {
   // asynchronous function to grab story from Hacker News
   const url = 'https://hacker-news.firebaseio.com/v0/item/';
   const storyUrl = url + number + '.json';
@@ -23,3 +23,6 @@ export const getStory = async(number) => {
     console.log(`Failed to get story ${number}: ${error}`);
   }
 }
+
+const hnService = {getTopStories, getStory}
+export default hnService
