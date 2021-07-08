@@ -21,17 +21,15 @@ const App = () => {
   }, [index, storyNums]);
 
   useEffect(() => {
-    updateStories()
-
     if (isNewIndex) {
       hnService
       .getTopStories()
       .then(stories => {
         setStoryNums(stories)
       })
-      // updateStories()
       setIsNewIndex(false)
     }
+    updateStories()
   }, [isNewIndex, index, updateStories, storyNums]);
 
   const handleMoreClick = (e) => {

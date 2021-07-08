@@ -4,7 +4,7 @@ import {generateId, generateTimestamp} from '../util';
 export const Feed = (props) => {
   return(
     <div className="Feed-list-container">
-      <ol className="Feed-list" start={props.index + 1}>
+      <ol className="Feed-list" start={props.start + 1}>
         {props.stories.length 
           ? props.stories.map(story => 
             <li className="Story" key={generateId()}>
