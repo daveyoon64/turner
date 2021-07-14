@@ -5,6 +5,10 @@ import {Header, Footer, Feed, Button} from './components';
 import {sleep} from './util';
 
 const App = () => {
+  /* 
+    storyNums:  array of HN stories as numbers
+    stories:    array of HN stories 
+  */
   const [stories, setStories] = useState([])
   const [storyNums, setStoryNums] = useState([])
   const [index, setIndex] = useState(1)
@@ -12,7 +16,7 @@ const App = () => {
 
   const updateStories = useCallback(async() => {
     const [first, last] = [((index * 30) - 30), index * 30];
-    const single_page = await storyNums.slice(first, last);
+    const single_page = storyNums.slice(first, last);
     const stories_to_render = await Promise.all(single_page.map(async(story) => {
       await sleep(0)
       return hnService.getStory(story)
@@ -30,20 +34,20 @@ const App = () => {
       setIsNewIndex(false)
     }
     window.onpopstate = () => {
-      console.log('mmmm kay')
+      const path = window.location.pathname
+      const newIndex = path.substring(path.lastIndexOf('='))
+      newIndex === '/'
+        ? setIndex(1)
+        : setIndex(newIndex.substring(1))
     }
     updateStories()
   }, [isNewIndex, index, updateStories, storyNums]);
 
-  /* 
-    storyNums:  array of HN stories as numbers
-    stories:    array of HN stories 
-  */
   const handleMoreClick = (e) => {
     e.preventDefault()
     const indexIncrement = index + 1
-    setIndex(indexIncrement)
     const location = 'page=' + index
+    setIndex(indexIncrement)
     window.history.pushState(null, '', location)
     setIsNewIndex(true)
   };
