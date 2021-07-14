@@ -1,12 +1,12 @@
 import {React} from 'react';
 import {generateId, generateTimestamp} from '../util';
 
-export const Feed = (props) => {
+export const Feed = ({start, stories}) => {
   return(
     <div className="Feed-list-container">
-      <ol className="Feed-list" start={props.start + 1}>
-        {props.stories.length 
-          ? props.stories.map(story => 
+      <ol className="Feed-list" start={ ((start * 30) - 29) }>
+        {stories.length 
+          ? stories.map(story => 
             <li className="Story" key={generateId()}>
               <a href={story.url}>{story.title}</a>
               <div className="Story-options">
